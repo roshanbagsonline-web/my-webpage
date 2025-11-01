@@ -6,398 +6,505 @@
 <title>Advanced Service Entry Form</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<!-- Font Awesome for icons (optional, but good for advanced UI) -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<style>
-    :root {
-        --primary-color: #6a67ce; /* A more vibrant, yet soft, purple */
-        --primary-dark: #5e5acb;
-        --secondary-color: #8c8c8c;
-        --background-light: #f5f7fa;
-        --card-background: #ffffff;
-        --border-color: #e0e0e0;
-        --shadow-light: rgba(0, 0, 0, 0.05);
-        --shadow-medium: rgba(0, 0, 0, 0.1);
-        --text-color-dark: #333;
-        --text-color-medium: #555;
-        --text-color-light: #777;
-    }
 
+<style>
     body {
-        font-family: 'Inter', sans-serif;
-        background: var(--background-light);
-        color: var(--text-color-dark);
-        line-height: 1.6;
+        font-family: 'Poppins', sans-serif;
+        background: #eef2f6;
+        padding: 20px;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .form-container {
-        max-width: 950px;
-        margin: 60px auto;
-        padding: 40px;
-        background: var(--card-background);
+        max-width: 1000px;
+        width: 100%;
+        margin: 40px auto;
+        background: #ffffff;
+        padding: 40px 50px;
         border-radius: 25px;
-        box-shadow: 0 15px 45px var(--shadow-light), 0 5px 15px rgba(0,0,0,0.03);
-        transition: all 0.4s ease-in-out;
-    }
-    .form-container:hover {
-        box-shadow: 0 25px 60px var(--shadow-medium), 0 8px 20px rgba(0,0,0,0.05);
+        box-shadow: 0 15px 50px rgba(0,0,0,0.08);
+        border: 1px solid #e0e0e0;
     }
     h2 {
         text-align: center;
         font-weight: 700;
+        color: #4a5a78;
         margin-bottom: 40px;
-        color: var(--primary-color);
-        font-size: 2.2rem;
+        position: relative;
     }
-    .form-section {
-        margin-bottom: 30px;
-        padding: 25px 30px;
-        border-radius: 20px;
-        background: var(--card-background);
-        box-shadow: 0 10px 30px var(--shadow-light);
-        transition: all 0.3s ease;
-        border: 1px solid var(--border-color);
-    }
-    .form-section:hover {
-        box-shadow: 0 12px 35px var(--shadow-medium);
-        transform: translateY(-2px);
+    h2::after {
+        content: '';
+        width: 80px;
+        height: 4px;
+        background: #6f42c1;
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 2px;
     }
     label {
         font-weight: 600;
-        color: var(--text-color-medium);
         margin-bottom: 8px;
         display: block;
+        color: #555;
     }
-    .form-control {
+    .form-control, .select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single {
         border-radius: 12px;
+        border: 1px solid #ced4da;
         padding: 10px 15px;
-        border: 1px solid var(--border-color);
-        box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
-        transition: all 0.3s ease;
-        height: auto; /* Allow padding to define height */
-    }
-    .form-control:focus {
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 0.25rem rgba(106, 103, 206, 0.25);
-        background-color: #f9f9ff;
-    }
-
-    /* Select2 Customization */
-    .select2-container--default .select2-selection--multiple {
-        border-radius: 12px;
-        min-height: 48px; /* Adjusted for better appearance */
-        border: 1px solid var(--border-color);
-        padding: 5px 10px;
+        box-shadow: none;
         transition: all 0.3s ease;
     }
-    .select2-container--default.select2-container--focus .select2-selection--multiple {
-        border-color: var(--primary-color) !important;
-        box-shadow: 0 0 0 0.25rem rgba(106, 103, 206, 0.25);
-    }
-    .select2-container--default .select2-selection--multiple .select2-selection__choice {
-        background-color: var(--primary-color);
-        color: white;
-        border: 1px solid var(--primary-dark);
-        border-radius: 8px;
-        padding: 3px 8px;
-        margin-top: 4px;
-        font-size: 0.9em;
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-    }
-    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-        color: rgba(255, 255, 255, 0.8);
-        margin-right: 5px;
-        font-size: 1.1em;
-        transition: all 0.2s ease;
-    }
-    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
-        color: white;
-    }
-    .select2-container--default .select2-selection--multiple .select2-selection__rendered {
-        padding: 0;
-    }
-    .select2-container--default .select2-selection--multiple .select2-search__field {
-        color: var(--text-color-dark);
-    }
-    .select2-dropdown {
-        border-radius: 10px;
-        border: 1px solid var(--primary-color);
-        box-shadow: 0 8px 20px var(--shadow-medium);
-    }
-    .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
-        background-color: var(--primary-color);
-        color: white;
-    }
-    .select2-container--default .select2-results__option--selectable {
-        padding: 10px 15px;
-    }
-
-    .conditional {
-        display: none;
-        transition: all 0.5s ease-in-out;
+    .form-control:focus, .select2-container--default .select2-selection--multiple:focus-within, .select2-container--default .select2-selection--single:focus-within {
+        border-color: #8a65d3;
+        box-shadow: 0 0 0 0.25rem rgba(111, 66, 193, 0.25);
     }
     .btn-primary {
         border-radius: 15px;
-        padding: 12px 45px;
-        font-weight: 600;
-        background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
+        padding: 12px 40px;
+        background: linear-gradient(45deg, #6f42c1, #8a65d3);
         border: none;
+        font-weight: 600;
+        box-shadow: 0 8px 20px rgba(111, 66, 193, 0.3);
         transition: all 0.3s ease;
-        font-size: 1.1em;
-        box-shadow: 0 8px 20px rgba(106, 103, 206, 0.3);
     }
     .btn-primary:hover {
-        background: linear-gradient(45deg, var(--primary-dark), #504ca0);
-        box-shadow: 0 12px 25px rgba(106, 103, 206, 0.4);
+        background: linear-gradient(45deg, #8a65d3, #6f42c1);
+        box-shadow: 0 10px 25px rgba(111, 66, 193, 0.4);
         transform: translateY(-2px);
     }
-
-    h5.text-primary {
-        color: var(--primary-color) !important;
+    .card-section {
+        background: #f8f9fa;
+        padding: 25px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        border: 1px solid #e9ecef;
+    }
+    .card-section h5 {
+        color: #6f42c1;
         font-weight: 600;
-        margin-bottom: 25px;
+        margin-bottom: 20px;
         display: flex;
         align-items: center;
-        gap: 10px;
     }
-    h5.text-primary i {
-        color: var(--primary-dark);
+    .card-section h5 i {
+        margin-right: 10px;
         font-size: 1.2em;
     }
-
-    /* Custom Toggle Switch for Warranty */
-    .toggle-switch-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 15px;
-        padding: 8px 0;
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: #6f42c1;
+        border: 1px solid #6f42c1;
+        color: white;
+        border-radius: 8px;
+        padding: 3px 10px;
     }
-    .toggle-switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 34px;
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+        color: white;
+        margin-left: 5px;
     }
-    .toggle-switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
+    .select2-container--default .select2-results__option--highlighted[aria-selected] {
+        background-color: #6f42c1;
+        color: white;
     }
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        transition: .4s;
-        border-radius: 34px;
+    #imagePreviewContainer img {
+        max-width: 100%;
+        max-height: 200px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 6px;
+        object-fit: contain;
+        background: #fff;
     }
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        transition: .4s;
-        border-radius: 50%;
+    .input-group-text {
+        background-color: #f1f3f5;
+        border-radius: 12px 0 0 12px;
+        border-right: none;
     }
-    input:checked + .slider {
-        background-color: var(--primary-color);
+    .input-group > .form-control {
+        border-radius: 0 12px 12px 0;
     }
-    input:focus + .slider {
-        box-shadow: 0 0 1px var(--primary-color);
+    .input-group:focus-within .input-group-text {
+        border-color: #8a65d3;
+        box-shadow: 0 0 0 0.25rem rgba(111, 66, 193, 0.25);
     }
-    input:checked + .slider:before {
-        transform: translateX(26px);
+    .form-control.is-invalid {
+        border-color: #dc3545;
     }
-    .toggle-label-text {
-        font-weight: 600;
-        color: var(--text-color-medium);
-        margin-right: 15px;
+    .form-control.is-invalid:focus {
+        box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+    }
+    .invalid-feedback {
+        display: none; /* Hidden by default */
+        width: 100%;
+        margin-top: 0.25rem;
+        font-size: 0.875em;
+        color: #dc3545;
+    }
+    .was-validated .form-control:invalid ~ .invalid-feedback,
+    .was-validated .form-select:invalid ~ .invalid-feedback,
+    .was-validated .select2-container.is-invalid ~ .invalid-feedback { /* Added for Select2 validation */
+        display: block;
     }
 </style>
 </head>
 <body>
 
 <div class="form-container">
-    <h2><i class="fas fa-tools me-2"></i> Service Entry Form</h2>
-    <form id="serviceForm">
+    <h2><i class="fas fa-tools me-3 text-primary"></i>Service Entry Form</h2>
+    <form id="serviceForm" class="needs-validation" novalidate>
 
-        <!-- Slip & Date Section -->
-        <div class="form-section">
-            <h5 class="mb-4 text-primary"><i class="fas fa-file-alt"></i> Slip & Date</h5>
+        <!-- General Service Details -->
+        <div class="card-section">
+            <h5><i class="fas fa-info-circle"></i>General Service Details</h5>
             <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="serviceDate">Date <span class="text-danger">*</span></label>
+                    <input type="date" class="form-control" id="serviceDate" required>
+                    <div class="invalid-feedback">
+                        Please select a date.
+                    </div>
+                </div>
                 <div class="col-md-6">
                     <label for="slipNo">Slip No</label>
-                    <input type="number" class="form-control" id="slipNo" value="1" readonly>
+                    <input type="text" class="form-control" id="slipNo" readonly>
                 </div>
-                <div class="col-md-6">
-                    <label for="serviceDate">Date</label>
-                    <input type="date" class="form-control" id="serviceDate" required>
+            </div>
+            <div class="mb-3">
+                <label for="serviceDesc">Service Description <span class="text-danger">*</span></label>
+                <select class="form-control" id="serviceDesc" multiple="multiple" required>
+                    <option value="Bags">Bags</option>
+                    <option value="Stitching">Stitching</option>
+                    <option value="Zip">Zip Repair/Replacement</option>
+                    <option value="Runner">Runner Replacement</option>
+                    <option value="Handle">Handle Repair/Replacement</option>
+                    <option value="Strolly">Strolly Wheel/Handle Repair</option>
+                    <option value="Buckle">Buckle Repair/Replacement</option>
+                    <option value="Cleaning">Professional Cleaning</option>
+                    <option value="Strap">Strap Adjustment/Replacement</option>
+                    <option value="Lock">Lock Repair/Replacement</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please select at least one service.
                 </div>
             </div>
         </div>
 
-        <!-- Customer Section -->
-        <div class="form-section">
-            <h5 class="mb-4 text-primary"><i class="fas fa-user"></i> Customer Details</h5>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="customerName">Customer Name</label>
-                    <input type="text" class="form-control" id="customerName" placeholder="e.g., John Doe" required>
+        <!-- Customer Information -->
+        <div class="card-section">
+            <h5><i class="fas fa-user"></i>Customer Information</h5>
+            <div class="mb-3">
+                <label for="customerName">Customer Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="customerName" required>
+                <div class="invalid-feedback">
+                    Customer name is required.
                 </div>
-                <div class="col-md-6">
-                    <label for="customerNumber">Customer Number</label>
-                    <input type="tel" class="form-control" id="customerNumber" placeholder="e.g., +1 (555) 123-4567" required>
+            </div>
+            <div class="mb-3">
+                <label for="customerNumber">Customer Number <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control" id="customerNumber" required pattern="[0-9]{10,}" title="Please enter a valid phone number (min 10 digits).">
+                <div class="invalid-feedback">
+                    Please enter a valid phone number.
                 </div>
             </div>
         </div>
 
-        <!-- Product Section -->
-        <div class="form-section">
-            <h5 class="mb-4 text-primary"><i class="fas fa-box-open"></i> Product Details</h5>
+        <!-- Product Details -->
+        <div class="card-section">
+            <h5><i class="fas fa-box"></i>Product Details</h5>
             <div class="row mb-3">
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <label for="brandName">Brand Name</label>
-                    <input type="text" class="form-control" id="brandName" placeholder="e.g., Samsonite">
+                    <input type="text" class="form-control" id="brandName">
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <label for="productName">Product Name</label>
-                    <input type="text" class="form-control" id="productName" placeholder="e.g., Suitcase Pro">
+                    <input type="text" class="form-control" id="productName">
                 </div>
-                <div class="col-md-3">
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
                     <label for="color">Color</label>
-                    <input type="text" class="form-control" id="color" placeholder="e.g., Black">
+                    <input type="text" class="form-control" id="color">
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
+                <label for="SizeToggle">Size</label>
+                <select class="form-control" id="sizeToggle">
                     <label for="size">Size</label>
-                    <input type="text" class="form-control" id="size" placeholder="e.g., Large">
+                    <option value=""> </option>
+                    <option value="Small">Small</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Large">Large</option>
+                    <option value="Extra Large">Extra Large</option>
+                     </select>
                 </div>
             </div>
         </div>
 
-        <!-- Service Section -->
-        <div class="form-section">
-            <h5 class="mb-4 text-primary"><i class="fas fa-wrench"></i> Service Information</h5>
-            <div class="row mb-4">
-                <div class="col-md-6">
-                    <label for="serviceDesc">Service Description</label>
-                    <select class="form-control" id="serviceDesc" multiple="multiple" data-placeholder="Select required service(s)">
-                        <option value="bags">Bags</option>
-                        <option value="stitching">Stitching</option>
-                        <option value="zip">Zip Repair/Replacement</option>
-                        <option value="runner">Runner Replacement</option>
-                        <option value="handle">Handle Repair/Replacement</option>
-                        <option value="strolly">Strolly Wheel/Handle Repair</option>
-                        <option value="buckle">Buckle Repair/Replacement</option>
-                        <option value="cleaning">Professional Cleaning</option>
-                        <option value="strap">Strap Adjustment/Replacement</option>
-                        <option value="lock">Lock Repair/Replacement</option>
-                    </select>
-                </div>
-                <div class="col-md-6 d-flex align-items-center justify-content-end">
-                    <div class="toggle-switch-wrapper">
-                        <span class="toggle-label-text me-3">Warranty / Non Warranty :</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="warrantyStatusToggle">
-                            <span class="slider round"></span>
-                        </label>
+        <!-- Warranty Status & Conditional Fields -->
+        <div class="card-section">
+            <h5><i class="fas fa-clipboard-check"></i>Warranty Status</h5>
+            <div class="mb-3">
+                <label for="warrantyStatusToggle">Status</label>
+                <select class="form-control" id="warrantyStatusToggle">
+                    <option value="Non-Warranty" selected>Non-Warranty</option>
+                    <option value="Warranty">Warranty</option>
+                </select>
+            </div>
+
+            <div id="nonWarrantyFields" class="mb-3">
+                <label for="estimateAmount">Estimate Amount <span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-rupee-sign"></i></span>
+                    <input type="number" class="form-control" id="estimateAmount" placeholder="Enter estimate" min="0" required>
+                    <div class="invalid-feedback">
+                        Estimate amount is required for non-warranty services.
                     </div>
                 </div>
             </div>
 
-            <!-- Conditional Warranty -->
-            <div class="row mb-3 conditional" id="warrantyDetails">
-                <h6 class="mb-3 text-secondary"><i class="fas fa-info-circle me-1"></i> Warranty Information</h6>
-                <div class="col-md-6">
-                    <label for="purchaseDate">Purchase Date</label>
+            <div id="warrantyFields" style="display:none;">
+                <div class="mb-3">
+                    <label for="invoiceNumber">Invoice Number <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="invoiceNumber">
+                    <div class="invalid-feedback">
+                        Invoice number is required for warranty services.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="purchaseDate">Invoice Date <span class="text-danger">*</span></label>
                     <input type="date" class="form-control" id="purchaseDate">
-                </div>
-                <div class="col-md-6">
-                    <label for="invoiceNumber">Invoice Number</label>
-                    <input type="text" class="form-control" id="invoiceNumber" placeholder="e.g., INV-2023-001">
-                </div>
-            </div>
-
-            <!-- Conditional Estimate -->
-            <div class="row mb-3 conditional" id="estimateAmountDiv">
-                <h6 class="mb-3 text-secondary"><i class="fas fa-rupee-sign me-1">
-</i> Estimated Cost</h6>
-                <div class="col-md-6">
-                    <label for="estimateAmount">Estimate Service Amount</label>
-                    <input type="number" class="form-control" id="estimateAmount" placeholder="Enter estimated amount in currency">
+                    <div class="invalid-feedback">
+                        Invoice date is required for warranty services.
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- Image Upload -->
+        <div class="card-section">
+            <h5><i class="fas fa-camera"></i>Product Image</h5>
+            <div class="mb-3">
+                <label for="productImage">Upload Product Image</label>
+                <input type="file" class="form-control" id="productImage" accept="image/*" capture="environment" onchange="previewProductImage(event)">
+                <small class="text-muted">Upload or take a photo (camera opens on mobile).</small>
+                <div id="imagePreviewContainer" class="mt-3 text-center" style="display:none;">
+                    <img id="imagePreview" src="" alt="Preview">
+                </div>
+            </div>
+        </div>
+        
         <div class="text-center mt-5">
-            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-paper-plane me-2"></i> Submit Service</button>
+            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-paper-plane me-2"></i>Submit Service Request</button>
         </div>
-
     </form>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script>
-    $(document).ready(function() {
-        // Initialize Select2 with enhanced options
-        $('#serviceDesc').select2({
-            placeholder: "Select required service(s)",
-            closeOnSelect: false, // Keep dropdown open after selecting an item
-            allowClear: true // Allow clearing all selections
-        });
+$(document).ready(function() {
+    // --- Configuration ---
+    const BASE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzSXg2RGga20-t7ivXE5nDhgfa_V0J2vt7OvMMcyDZSaFK5rRsBNKnFwI9NAjjzkEn0jw/exec";
 
-        // Set today's date
-        const today = new Date().toISOString().split('T')[0];
-        $('#serviceDate').val(today);
-
-        // Warranty conditional fields based on toggle switch
-        $('#warrantyStatusToggle').change(function() {
-            if($(this).is(':checked')) { // If toggle is ON (Warranty)
-                $('#warrantyDetails').slideDown();
-                $('#estimateAmountDiv').slideUp();
-            } else { // If toggle is OFF (Non-Warranty)
-                $('#warrantyDetails').slideUp();
-                $('#estimateAmountDiv').slideDown();
-            }
-        }).trigger('change'); // Trigger on load to set initial state
-
-        // Auto-increment Slip Number
-        if(!localStorage.getItem('lastSlip')) localStorage.setItem('lastSlip','1');
-        else $('#slipNo').val(parseInt(localStorage.getItem('lastSlip')) + 1);
-
-        // Form submission handler
-        $('#serviceForm').submit(function(e){
-            e.preventDefault();
-
-            // Basic validation
-            if (!$("#customerName").val() || !$("#customerNumber").val() || $("#serviceDesc").val().length === 0) {
-                alert("Please fill in all required fields (Customer Name, Number, and Service Description).");
-                return;
-            }
-
-            let currentSlip = parseInt($('#slipNo').val());
-            localStorage.setItem('lastSlip', currentSlip);
-            alert('Form submitted successfully! Slip No: ' + currentSlip);
-
-            // Reset form fields
-            this.reset();
-            $('#serviceDesc').val(null).trigger('change'); // Reset Select2
-            $('#warrantyStatusToggle').prop('checked', false).trigger('change'); // Reset toggle
-            $('#serviceDate').val(today); // Reset date
-            $('#slipNo').val(currentSlip + 1); // Increment slip number
-        });
+    // Initialize Select2
+    $('#serviceDesc').select2({
+        placeholder: "Select service type(s)",
+        closeOnSelect: false,
+        allowClear: true,
+        width: '100%'
+    }).on('change', function() {
+        // Trigger validation check on change for Select2
+        $(this).closest('.form-group, .mb-3').find('.select2-container').toggleClass('is-invalid', !$(this).val() || $(this).val().length === 0);
     });
-</script>
 
+    // Set today's date
+    const today = new Date().toISOString().split('T')[0];
+    $('#serviceDate').val(today);
+
+    // Initial state for warranty fields
+    toggleWarrantyFields();
+
+    // Event listener for warranty status toggle
+    $('#warrantyStatusToggle').on('change', function() {
+        toggleWarrantyFields();
+    });
+
+    function toggleWarrantyFields() {
+        const status = $('#warrantyStatusToggle').val();
+        if (status === 'Warranty') {
+            $('#warrantyFields').slideDown();
+            $('#nonWarrantyFields').slideUp();
+            // Remove 'required' from non-warranty fields
+            $('#estimateAmount').removeAttr('required').val('');
+            // Add 'required' to warranty fields
+            $('#invoiceNumber').attr('required', true);
+            $('#purchaseDate').attr('required', true);
+        } else { // Non-Warranty
+            $('#warrantyFields').slideUp();
+            $('#nonWarrantyFields').slideDown();
+            // Add 'required' to non-warranty fields
+            $('#estimateAmount').attr('required', true);
+            // Remove 'required' from warranty fields
+            $('#invoiceNumber').removeAttr('required').val('');
+            $('#purchaseDate').removeAttr('required').val('');
+        }
+        // Re-validate the form fields after toggling
+        $('#serviceForm').removeClass('was-validated');
+    }
+
+    // Image preview function
+    window.previewProductImage = function(event) {
+        const input = event.target;
+        const previewContainer = document.getElementById('imagePreviewContainer');
+        const preview = document.getElementById('imagePreview');
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                previewContainer.style.display = 'block';
+            }
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.src = '';
+            previewContainer.style.display = 'none';
+        }
+    }
+
+    // Convert file to base64
+    function toBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    }
+
+    // Fetch last slip number from Google Sheet on page load
+    async function fetchLastSlipNumber() {
+        const url = BASE_APPS_SCRIPT_URL + "?action=getLastSlip";
+        
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+            }
+            const data = await response.json();
+            if (data && data.status === 'success' && typeof data.lastSlipNumber === 'number') {
+                $('#slipNo').val(data.lastSlipNumber + 1);
+            } else {
+                console.warn("Failed to retrieve last slip number, defaulting to 1. Response:", data);
+                $('#slipNo').val('1'); // Default to 1 if no slip numbers found or error
+            }
+        } catch (error) {
+            console.error("Error fetching last slip number:", error);
+            alert("Error fetching slip number. Please check console for details. Defaulting to 1.");
+            $('#slipNo').val('1'); // Fallback if fetch fails
+        }
+    }
+    
+    fetchLastSlipNumber(); // Call on page load
+
+    // Form submit
+    $('#serviceForm').submit(async function(e){
+        e.preventDefault();
+
+        // Custom validation for Select2 (Bootstrap's native validation doesn't cover it well)
+        const serviceDescInput = $('#serviceDesc');
+        if (serviceDescInput.val().length === 0) {
+            serviceDescInput.closest('.form-group, .mb-3').find('.select2-container').addClass('is-invalid');
+            // Prevent default submission if Select2 is invalid
+            if (!this.checkValidity()) {
+                 e.stopPropagation();
+                 this.classList.add('was-validated');
+                 return;
+            }
+        } else {
+            serviceDescInput.closest('.form-group, .mb-3').find('.select2-container').removeClass('is-invalid');
+        }
+
+        // Bootstrap's client-side validation
+        if (!this.checkValidity()) {
+            e.stopPropagation();
+            this.classList.add('was-validated');
+            return;
+        }
+        // If all checks pass, add was-validated class
+        this.classList.add('was-validated');
+
+
+        let currentSlip = parseInt($('#slipNo').val());
+
+        const imageFile = document.getElementById("productImage").files[0];
+        let base64Image = "";
+        if (imageFile) {
+            base64Image = await toBase64(imageFile);
+        }
+
+        const warrantyStatus = $('#warrantyStatusToggle').val();
+
+        const formData = {
+            action: "submitService", // Action for Apps Script
+            date: $('#serviceDate').val(),
+            slipNo: currentSlip,
+            customerName: $('#customerName').val(),
+            contact: $('#customerNumber').val(),
+            productName: $('#productName').val(),
+            brand: $('#brandName').val(),
+            colorSize: $('#color').val() + " " + $('#size').val(),
+            serviceType: $('#serviceDesc').val().join(', '),
+            warrantyStatus: warrantyStatus,
+            estimateAmount: warrantyStatus === 'Non-Warranty' ? $('#estimateAmount').val() : '',
+            invoiceNumber: warrantyStatus === 'Warranty' ? $('#invoiceNumber').val() : '',
+            invoiceDate: warrantyStatus === 'Warranty' ? $('#purchaseDate').val() : '',
+            image: base64Image,
+            imageName: imageFile ? imageFile.name : ""
+        };
+
+        try {
+            const response = await fetch(BASE_APPS_SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(formData),
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8' // Required for Google Apps Script to parse JSON
+                }
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Server responded with an error: ${errorText}`);
+            }
+
+            const result = await response.json();
+            if (result.status === 'success') {
+                alert('✅ Data submitted successfully!');
+            } else {
+                alert('❌ Submission failed: ' + result.message);
+            }
+            
+        } catch (err) {
+            alert('❌ An error occurred: ' + err.message);
+        }
+
+        // Reset form and update slip number for next entry
+        this.reset();
+        $('#serviceDesc').val(null).trigger('change');
+        // Re-fetch the last slip number to ensure it's up-to-date after submission
+        await fetchLastSlipNumber();
+        $('#imagePreviewContainer').hide();
+        $('#serviceDate').val(today); // Reset date
+        $('#warrantyStatusToggle').val('Non-Warranty').trigger('change'); // Reset warranty status
+        this.classList.remove('was-validated'); // Remove validation styles
+    });
+});
+</script>
 </body>
 </html>
